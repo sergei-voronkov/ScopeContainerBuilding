@@ -3,7 +3,6 @@
     using Autofac;
     using Autofac.Core;
     using Autofac.Core.Resolving.Pipeline;
-    using System;
     using TempStorage.Models;
     using TempStorage.Services;
 
@@ -28,12 +27,20 @@
                             PipelinePhase.RegistrationPipelineStart,
                             (resolveRequestContext, next) =>
                             {
+                                AWSSettings aws1 = resolveRequestContext.Resolve<AWSSettings>();
+
                                 ILifetimeScope s1 = resolveRequestContext.ActivationScope.BeginLifetimeScope(b =>
                                 {
+                                    // b.RegisterInstance(
+                                    //     new AWSSettings(
+                                    //         "Bucket 2",
+                                    //         "Temp Bucket 2"));
+
                                     b.RegisterInstance(
-                                        new AWSSettings(
-                                            "Bucket 2",
-                                            "Temp Bucket 2"));
+                                        aws1 with
+                                        {
+                                            Bucket = aws1.TempBucket
+                                        });
                                 });
 
                                 resolveRequestContext.ChangeScope((ISharingLifetimeScope)s1);
