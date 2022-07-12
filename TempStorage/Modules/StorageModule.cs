@@ -48,6 +48,10 @@
                             });
                     })
                 .As<ITempStorage>();
+
+            builder
+                .RegisterType<Render>()
+                .AsImplementedInterfaces();
         }
     }
 }

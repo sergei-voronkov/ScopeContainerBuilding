@@ -25,6 +25,11 @@
             tempStorage.Put(
                 "path1",
                 "content1");
+
+
+            IRender render = container.Resolve<IRender>();
+
+            render.DoRender();
         }
     }
 }
