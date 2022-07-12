@@ -14,9 +14,15 @@
 
             using IContainer container = builder.Build();
 
-            ITempStorage storage = container.Resolve<ITempStorage>();
+            IStorage storage = container.Resolve<IStorage>();
 
             storage.Put(
+                "path1",
+                "content1");
+
+            ITempStorage tempStorage = container.Resolve<ITempStorage>();
+
+            tempStorage.Put(
                 "path1",
                 "content1");
         }
